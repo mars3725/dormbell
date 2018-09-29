@@ -10,6 +10,8 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   String text = "QR Data Goes here once read";
+  Map<String, dynamic> data;
+  bool dismissable = false;
   @override
   void initState() {
     super.initState();
@@ -25,26 +27,32 @@ class _CameraPageState extends State<CameraPage> {
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
             qrCodeCallback: (code) {
-              var data = json.decode(code);
-              showDialog(context: context, builder: (context) => AlertDialog(
-                title: Text(data['roomName']),
-                content: Text('Owner: '+data['name']),
-                actions: <Widget>[
-                  FlatButton(child: Text('Cancel'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  FlatButton(child: Text('Ring'),
-                    onPressed: () {
-                      print("Ringing");
-                    },
-                  ),
-                  FlatButton(child: Text('Message'),
-                    onPressed: () {
-                      print("Messaging");
-                    },
-                  )
-                ],
-              ));
+              if (data == null) {
+                data = json.decode(code);
+                showDialog(context: context, barrierDismissible: false, builder: (context) =>
+                    AlertDialog(
+                      title: Text(data['roomName']),
+                      content: Text('Owner: ' + data['name']),
+                      actions: <Widget>[
+                        FlatButton(child: Text('Cancel'),
+                          onPressed: () {
+                          data = null;
+                          Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(child: Text('Ring'),
+                          onPressed: () {
+                            print("Ringing");
+                          },
+                        ),
+                        FlatButton(child: Text('Message'),
+                          onPressed: () {
+                            print("Messaging");
+                          },
+                        )
+                      ],
+                    ));
+              }
             },
           )),
         ));
