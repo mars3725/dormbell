@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr/qr.dart';
 
 class CreateCodePage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class CreateCodePage extends StatefulWidget {
 class _CreateCodePageState extends State<CreateCodePage> {
   String roomName = "Room Name";
   String name = "Name";
-  Widget qrCode = Container();
+  Widget QRImage = Container();
   @override
   void initState() {
     super.initState();
@@ -19,6 +20,8 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(title: Text("Create Code")),
         body: Center(
@@ -53,16 +56,27 @@ class _CreateCodePageState extends State<CreateCodePage> {
                     "latitude": 0.0,
                     "longitude": 0.0
                   };
-                  qrCode = QrImage(
-                    data: json.encode(data),
-                    size: 200.0,
-                  );
+                  final qrCode = new QrCode(4, QrErrorCorrectLevel.L);
+                  qrCode.addData(json.encode(data));
+                  qrCode.make();
+                  List<int> lst = List();
+                  for (int x = 0; x < qrCode.moduleCount; x++) {
+                    for (int y = 0; y < qrCode.moduleCount; y++) {
+                      if (qrCode.isDark(y, x)) {
+                        lst.add(255);
+                      }
+                      else {
+                        lst.add(0);
+                      }
+                    }
+                  }
+                  QRImage = Image.memory(Uint8List.fromList(lst));
                 });
               },
               child:
                 Text("Create QR Code"),
             ),
-            qrCode
+            QRImage
           ],
         )));
   }
