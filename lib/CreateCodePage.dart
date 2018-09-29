@@ -17,33 +17,31 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
+    return Scaffold(
+      appBar: AppBar(title: Text("Create Code")),
+        body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Row(
+            Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Text("Location:"),
-                  ),
-                  Expanded(child: TextField(controller: TextEditingController(text: location) ,onChanged: (value) {
+                  Text("Location:"),
+                  Flexible(child: TextField(controller: TextEditingController(text: location) ,onChanged: (value) {
                     location = value;
                     },
                   )),
                 ]
-            ),
-            Row(
+            )),
+        Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Text("Name:")
-                  ),
-                  Expanded(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
+                  Text("Name:"),
+                  Flexible(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
                     name = value;
                     },
                   )),
                 ]
-            ),
+            )),
             FlatButton(
               onPressed: () {
                 setState(() {

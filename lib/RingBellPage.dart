@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
-class RingBellPage extends StatefulWidget {
+class CameraPage extends StatefulWidget {
   @override
-  _RingBellPageState createState() => _RingBellPageState();
+  _CameraPageState createState() => _CameraPageState();
 }
 
-class _RingBellPageState extends State<RingBellPage> {
+class _CameraPageState extends State<CameraPage> {
   String text = "QR Data Goes here once read";
   @override
   void initState() {
@@ -15,17 +15,36 @@ class _RingBellPageState extends State<RingBellPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
+    return Scaffold(
+        appBar: AppBar(title: Text("Read Code")),
+        body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
           SizedBox(
-          width: 300.0,
-          height: 300.0,
-          child: new QrCamera(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: QrCamera(
             qrCodeCallback: (code) {
-              setState(() => text = code);
+              showDialog(context: context, builder: (context) => AlertDialog(
+                title: Text("Ben's Room"),
+                actions: <Widget>[
+                  FlatButton(child: Text('Cancel'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  FlatButton(child: Text('Ring'),
+                    onPressed: () {
+                      print("Ringing");
+                    },
+                  ),
+                  FlatButton(child: Text('Message'),
+                    onPressed: () {
+                      print("Messaging");
+                    },
+                  )
+                ],
+              ));
             },
           )),
             Text(text)

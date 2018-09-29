@@ -2,7 +2,7 @@
 //Benjamin Greenberg
 //Daniel Troutman
 //Tucker Miles....
-import 'package:dormbell/CreateCode.dart';
+import 'package:dormbell/CreateCodePage.dart';
 import 'package:dormbell/HomePage.dart';
 import 'package:dormbell/RingBellPage.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: <String, WidgetBuilder>{
           '/CreateCodePage': (BuildContext context) => CreateCodePage(),
-          '/RingBellPage': (BuildContext context) => RingBellPage(),
+          '/RingBellPage': (BuildContext context) => CameraPage(),
         });
   }
 }
