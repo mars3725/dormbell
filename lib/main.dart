@@ -4,7 +4,7 @@
 //Tucker Miles....
 import 'package:dormbell/CreateCodePage.dart';
 import 'package:dormbell/RingBellPage.dart';
-import 'package:dormbell/AuthPage-D.dart';
+import 'package:dormbell/AuthPage.dart';
 import 'package:dormbell/Share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: DemoApp(),
+        home: AuthPage(),
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.lightBlue,

@@ -70,6 +70,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   }
                   List<int> imgData = Img.encodeJpg(img);
                   QRImage = Image.memory(Uint8List.fromList(imgData));
+
                 });
               },
               child:

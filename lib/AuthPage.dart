@@ -26,7 +26,6 @@ class _AuthPageState extends State<AuthPage> {
     FirebaseAuth.instance.onAuthStateChanged.listen((user) {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
-        //Go to RingBell
         Navigator.of(context).pushNamed('/RingBellPage');
       }
     });
