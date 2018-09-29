@@ -11,7 +11,6 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   String text = "QR Data Goes here once read";
   Map<String, dynamic> data;
-  bool dismissable = false;
   @override
   void initState() {
     super.initState();
@@ -22,7 +21,9 @@ class _CameraPageState extends State<CameraPage> {
     return Scaffold(
         appBar: AppBar(title: Text("Read Code")),
         body: Center(
-        child: SizedBox(
+        child: Stack(children: <Widget>[
+          IconButton(icon: Icon(Icons.add), onPressed: () => Navigator.of(context).pushNamed('/CreateCodePage')),
+          SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
@@ -54,7 +55,7 @@ class _CameraPageState extends State<CameraPage> {
                     ));
               }
             },
-          )),
+          ))]),
         ));
   }
 }

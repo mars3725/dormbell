@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: HomePage(),
+        home: CameraPage(),
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.lightBlue,
