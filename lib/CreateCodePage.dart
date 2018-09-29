@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:qr/qr.dart';
+import 'package:image/image.dart' as Img;
 
 class CreateCodePage extends StatefulWidget {
   @override
@@ -56,21 +58,19 @@ class _CreateCodePageState extends State<CreateCodePage> {
                     "latitude": 0.0,
                     "longitude": 0.0
                   };
-                  final qrCode = new QrCode(4, QrErrorCorrectLevel.L);
+                  final qrCode = QrCode(4, QrErrorCorrectLevel.L);
                   qrCode.addData(json.encode(data));
                   qrCode.make();
-                  List<int> lst = List();
-                  for (int x = 0; x < qrCode.moduleCount; x++) {
-                    for (int y = 0; y < qrCode.moduleCount; y++) {
-                      if (qrCode.isDark(y, x)) {
-                        lst.add(255);
-                      }
-                      else {
-                        lst.add(0);
-                      }
+                  Img.Image img = Img.Image(qrCode.moduleCount, qrCode.moduleCount);
+                  img.fill(0);
+                  for (int x = 0; x < img.width; x++) {
+                    for (int y = 0; y < img.height; y++) {
+                      if (qrCode.isDark(x, y)) img.setPixel(x, y, 255);
+                      else img.setPixel(x, y, 0);
                     }
                   }
-                  QRImage = Image.memory(Uint8List.fromList(lst));
+                  var imgData = Img.encodeJpg(Img.copyResize(img, 250, 250, Img.CUBIC));
+                  QRImage = Image.memory(Uint8List.fromList(imgData));
                 });
               },
               child:
