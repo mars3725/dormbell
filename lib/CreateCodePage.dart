@@ -14,7 +14,7 @@ class CreateCodePage extends StatefulWidget {
 class _CreateCodePageState extends State<CreateCodePage> {
   String roomName = "Room Name";
   String name = "Name";
-  Widget QRImage = Container();
+  List<int> imgData;
   @override
   void initState() {
     super.initState();
@@ -68,16 +68,18 @@ class _CreateCodePageState extends State<CreateCodePage> {
                       if (qrCode.isDark(x, y)) img = Img.fillRect(img, x*pixelSize, y*pixelSize, x*pixelSize+pixelSize, y*pixelSize+pixelSize, Colors.black.value);
                     }
                   }
-                  List<int> imgData = Img.encodeJpg(img);
-                  QRImage = Image.memory(Uint8List.fromList(imgData));
-
+                  imgData = Img.encodeJpg(img);
                 });
               },
               child:
                 Text("Create QR Code"),
             ),
-            QRImage,
-
+            imgData == null? Container() : Image.memory(Uint8List.fromList(imgData)),
+            imgData == null? Container() : FlatButton(
+                onPressed: () {
+                  print("Share Pressed");
+                },
+                child: Text("Share Code"))
           ],
         )));
   }
