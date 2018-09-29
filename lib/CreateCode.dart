@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CreateCodePage extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class CreateCodePage extends StatefulWidget {
 
 class _CreateCodePageState extends State<CreateCodePage> {
   String title = "Title here";
+  Widget qrCode = Container();
   @override
   void initState() {
     super.initState();
@@ -20,9 +22,21 @@ class _CreateCodePageState extends State<CreateCodePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             TextField(textAlign: TextAlign.center, controller: TextEditingController(text: title) ,onChanged: (value) {
-
+              title = value;
             },),
-            Text("Create QR Code")
+            FlatButton(
+              onPressed: () {
+                setState(() {
+                  qrCode = QrImage(
+                    data: title,
+                    size: 200.0,
+                  );
+                });
+              },
+              child:
+                Text("Create QR Code"),
+            ),
+            qrCode
           ],
         )));
   }
