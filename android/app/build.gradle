@@ -64,10 +64,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //Firebase Messaging Dependency
-    implementation 'com.google.firebase:firebase-messaging:17.3.2'
-    //Firebase Authentication Dependency
-    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
-    //Firebase Cloud Firestore Dependency
-    implementation 'com.google.firebase:firebase-firestore:17.1.0'
 }

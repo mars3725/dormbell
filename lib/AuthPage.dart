@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geohash/geohash.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:location/location.dart';
-import 'package:squaad/Backend.dart';
-import 'package:squaad/data/UserData.dart';
-import 'package:squaad/pages/CreateProfilePage.dart';
+
 
 class AuthPage extends StatefulWidget {
   final bool silentSignIn;
@@ -123,10 +121,3 @@ class GoogleAuth {
   }
 }
 
-class TwitterAuth {
-  //TODO: Implement twitter authentication
-}
-
-class FacebookAuth {
-  //TODO: Implement facebook authentication
-}
