@@ -29,7 +29,7 @@ class DemoAppState extends State<DemoApp> {
                 new TextField(
                   decoration: const InputDecoration(
                     labelText: 'Share:',
-                    hintText: 'Enter some text and/or link to share',
+                    hintText: 'Press the share button link to share',
                   ),
                   maxLines: 2,
                   onChanged: (String value) => setState(() {

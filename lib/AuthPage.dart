@@ -51,11 +51,10 @@ class _AuthPageState extends State<AuthPage> {
                   color: Colors.white,
                   onPressed: () {
                     //setState(() => loading = true);
-                    Navigator.of(context).pushNamed('/RingBellPage');
-                    /*GoogleAuth().interactiveSignIn().then((user) async {
-                     //FIXME Figure out interactive sign in
 
-                    });*/
+                    GoogleAuth().interactiveSignIn().then((user) async {
+                      Navigator.of(context).pushNamed('/RingBellPage');
+                    });
                   }),
             ])
           ],
