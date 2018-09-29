@@ -4,6 +4,7 @@
 //Tucker Miles....
 import 'package:dormbell/CreateCodePage.dart';
 import 'package:dormbell/RingBellPage.dart';
+import 'package:dormbell/AuthPage-D.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: CameraPage(),
+        home: AuthPage(),
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.lightBlue,
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/CreateCodePage': (BuildContext context) => CreateCodePage(),
           '/RingBellPage': (BuildContext context) => CameraPage(),
+          '/AuthPage-D': (BuildContext context) => AuthPage(),
         });
   }
 }
