@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "68133826293",
+    "firebase_url": "https://dormbell-ce20b.firebaseio.com",
+    "project_id": "dormbell-ce20b",
+    "storage_bucket": "dormbell-ce20b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68133826293:android:21583e597e9542c0",
+        "android_client_info": {
+          "package_name": "com.dormbell.dormbell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68133826293-p281nl7cc4c17ua049lahbh84hp6bolt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dormbell.dormbell",
+            "certificate_hash": "bb60fab9fc00922cfa6e8f069e0a65760e79890e"
+          }
+        },
+        {
+          "client_id": "68133826293-9edr26s6eb2ionbrbfogmtln61de2pq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDr1s9wA9YdSc6aUiLPq6i_-IYv_O9IGqI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68133826293-9edr26s6eb2ionbrbfogmtln61de2pq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

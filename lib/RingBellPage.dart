@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_mobile_vision/qr_camera.dart';
 
 class RingBellPage extends StatefulWidget {
   @override
@@ -6,6 +7,7 @@ class RingBellPage extends StatefulWidget {
 }
 
 class _RingBellPageState extends State<RingBellPage> {
+  String text = "QR Data Goes here once read";
   @override
   void initState() {
     super.initState();
@@ -18,7 +20,15 @@ class _RingBellPageState extends State<RingBellPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text("Ring Bell")
+          SizedBox(
+          width: 300.0,
+          height: 300.0,
+          child: new QrCamera(
+            qrCodeCallback: (code) {
+              setState(() => text = code);
+            },
+          )),
+            Text(text)
           ],
         )));
   }
