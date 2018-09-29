@@ -18,11 +18,7 @@ class _CameraPageState extends State<CameraPage> {
     return Scaffold(
         appBar: AppBar(title: Text("Read Code")),
         body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-          SizedBox(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
@@ -47,8 +43,6 @@ class _CameraPageState extends State<CameraPage> {
               ));
             },
           )),
-            Text(text)
-          ],
-        )));
+        ));
   }
 }

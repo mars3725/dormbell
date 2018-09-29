@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -7,7 +9,7 @@ class CreateCodePage extends StatefulWidget {
 }
 
 class _CreateCodePageState extends State<CreateCodePage> {
-  String location = "Location";
+  String roomName = "Room Name";
   String name = "Name";
   Widget qrCode = Container();
   @override
@@ -26,16 +28,16 @@ class _CreateCodePageState extends State<CreateCodePage> {
           children: <Widget>[
             Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
-                  Text("Location:"),
-                  Flexible(child: TextField(controller: TextEditingController(text: location) ,onChanged: (value) {
-                    location = value;
+                  Text("Room Name: "),
+                  Flexible(child: TextField(controller: TextEditingController(text: roomName) ,onChanged: (value) {
+                    roomName = value;
                     },
                   )),
                 ]
             )),
         Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
-                  Text("Name:"),
+                  Text("Name: "),
                   Flexible(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
                     name = value;
                     },
@@ -45,8 +47,9 @@ class _CreateCodePageState extends State<CreateCodePage> {
             FlatButton(
               onPressed: () {
                 setState(() {
+                  var data = QRData(name, roomName, 0, 0);
                   qrCode = QrImage(
-                    data: "Location: " + location + "\nName: " + name,
+                    data: jsonEncode(data),
                     size: 200.0,
                   );
                 });
@@ -58,4 +61,11 @@ class _CreateCodePageState extends State<CreateCodePage> {
           ],
         )));
   }
+}
+
+class QRData {
+  String roomName, message, owner;
+  double latitude, longitude;
+
+  QRData(this.owner, this.roomName, this.latitude, this.longitude, {this.message=""});
 }
