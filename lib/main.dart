@@ -1,7 +1,7 @@
 // Matt Mohandiss
 //Benjamin Greenberg
 //Daniel Troutman
-//Tucker Miles
+//Tucker Miles....
 import 'package:flutter/material.dart';
 import 'package:nfc/nfc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
