@@ -7,7 +7,8 @@ class CreateCodePage extends StatefulWidget {
 }
 
 class _CreateCodePageState extends State<CreateCodePage> {
-  String title = "Title here";
+  String location = "Location";
+  String name = "Name";
   Widget qrCode = Container();
   @override
   void initState() {
@@ -21,14 +22,33 @@ class _CreateCodePageState extends State<CreateCodePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            TextField(textAlign: TextAlign.center, controller: TextEditingController(text: title) ,onChanged: (value) {
-              title = value;
-            },),
+            Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text("Location:"),
+                  ),
+                  Expanded(child: TextField(controller: TextEditingController(text: location) ,onChanged: (value) {
+                    location = value;
+                    },
+                  )),
+                ]
+            ),
+            Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text("Name:")
+                  ),
+                  Expanded(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
+                    name = value;
+                    },
+                  )),
+                ]
+            ),
             FlatButton(
               onPressed: () {
                 setState(() {
                   qrCode = QrImage(
-                    data: title,
+                    data: "Location: " + location + "\nName: " + name,
                     size: 200.0,
                   );
                 });
