@@ -22,8 +22,6 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(title: Text("Create Code")),
         body: Center(
@@ -62,7 +60,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   qrCode.addData(json.encode(data));
 
                   qrCode.make();
-                  int pixelSize = 5;
+                  int pixelSize = 8;
                   Img.Image img = Img.Image(qrCode.moduleCount*pixelSize, qrCode.moduleCount*pixelSize);
                   img = img.fill(Colors.white.value);
                   for (int x = 0; x < qrCode.moduleCount; x++) {
@@ -70,14 +68,15 @@ class _CreateCodePageState extends State<CreateCodePage> {
                       if (qrCode.isDark(x, y)) img = Img.fillRect(img, x*pixelSize, y*pixelSize, x*pixelSize+pixelSize, y*pixelSize+pixelSize, Colors.black.value);
                     }
                   }
-                  var imgData = Img.encodeJpg(img);
-                  QRImage = Image.memory(Uint8List.fromList(imgData), fit: BoxFit.fitWidth);
+                  List<int> imgData = Img.encodeJpg(img);
+                  QRImage = Image.memory(Uint8List.fromList(imgData));
                 });
               },
               child:
                 Text("Create QR Code"),
             ),
-            QRImage
+            QRImage,
+
           ],
         )));
   }
