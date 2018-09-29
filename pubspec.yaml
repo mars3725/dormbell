@@ -24,6 +24,7 @@ dependencies:
   firebase_auth: ^0.5.20
   google_sign_in: ^3.0.5
   image: ^2.0.4
+  share: ^0.5.3
 
 dev_dependencies:
   flutter_test:

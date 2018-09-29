@@ -5,6 +5,7 @@
 import 'package:dormbell/CreateCodePage.dart';
 import 'package:dormbell/RingBellPage.dart';
 import 'package:dormbell/AuthPage-D.dart';
+import 'package:dormbell/Share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: CameraPage(),
+        home: DemoApp(),
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.lightBlue,
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           '/CreateCodePage': (BuildContext context) => CreateCodePage(),
           '/RingBellPage': (BuildContext context) => CameraPage(),
           '/AuthPage-D': (BuildContext context) => AuthPage(),
+          '/Share': (BuildContext context) => DemoApp(),
         });
   }
 }
