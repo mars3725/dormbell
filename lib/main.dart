@@ -1,5 +1,5 @@
 // Matt Mohandiss
-//Benjamin Greenberg - 1
+//Benjamin Greenberg
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
