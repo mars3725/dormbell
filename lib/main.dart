@@ -92,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () => print('QR Pressed'),
                 child:
                   Text('QR',style: TextStyle(fontSize: 128.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-                  //FIXME shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
             ),
             FlatButton(
                 onPressed: () => print('NFC Pressed'),
