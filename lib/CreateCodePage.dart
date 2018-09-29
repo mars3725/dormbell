@@ -69,7 +69,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                       if (qrCode.isDark(x, y)) img = Img.fillRect(img, x*pixelSize, y*pixelSize, x*pixelSize+pixelSize, y*pixelSize+pixelSize, Colors.black.value);
                     }
                   }
-                  imgData = Img.encodeJpg(img);
+                  imgData = Img.encodePng(img);
                 });
               },
               child:
@@ -78,14 +78,11 @@ class _CreateCodePageState extends State<CreateCodePage> {
             imgData == null? Container() : Image.memory(Uint8List.fromList(imgData)),
             imgData == null? Container() : FlatButton(
                 onPressed: () {
-                  AdvancedShare.generic(msg: "Hello", url: base64Encode(imgData)).then((response) {
-                    if (response == 0) {
-                      print("failed.");
-                    } else if (response == 1) {
-                      print("success");
-                    } else if (response == 2) {
-                      print("application isn't installed");
-                    }
+                  var str = base64Encode(imgData);
+                  AdvancedShare.generic(msg: roomName, url: "data:image/png;base64, "+str).then((response) {
+                    if (response == 0) print("failed to share code");
+                    else if (response == 1) print("success sharing code");
+                    else if (response == 2) print("application isn't installed");
                   });
                 },
                 child: Text("Share Code"))
