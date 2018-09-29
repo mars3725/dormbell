@@ -50,7 +50,7 @@ class _AuthPageState extends State<AuthPage> {
                       style: TextStyle(color: Colors.grey)),
                   color: Colors.white,
                   onPressed: () {
-                    //setState(() => loading = true);
+                    setState(() => loading = true);
 
                     GoogleAuth().interactiveSignIn().then((user) async {
                       Navigator.of(context).pushNamed('/RingBellPage');
