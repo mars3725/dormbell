@@ -3,6 +3,9 @@
 //Daniel Troutman
 //Tucker Miles
 import 'package:flutter/material.dart';
+import 'package:nfc/nfc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:fast_qr_reader_view/fast_qr_reader_view.dart';
 
 void main() => runApp(new MyApp());
 
@@ -83,11 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
+          
           children: <Widget>[
             FlatButton(
                 onPressed: () => print('QR Pressed'),
                 child:
-                  Text('QR',style: TextStyle(fontSize: 128.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
+                  Text('QR',style: TextStyle(fontSize: 128.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                  //FIXME shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
             ),
             FlatButton(
                 onPressed: () => print('NFC Pressed'),
