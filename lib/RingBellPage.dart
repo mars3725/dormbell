@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
@@ -23,8 +25,10 @@ class _CameraPageState extends State<CameraPage> {
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
             qrCodeCallback: (code) {
+              var data = json.decode(code);
               showDialog(context: context, builder: (context) => AlertDialog(
-                title: Text("Ben's Room"),
+                title: Text(data['roomName']),
+                content: Text('Owner: '+data['name']),
                 actions: <Widget>[
                   FlatButton(child: Text('Cancel'),
                     onPressed: () => Navigator.of(context).pop(),
