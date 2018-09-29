@@ -47,9 +47,14 @@ class _CreateCodePageState extends State<CreateCodePage> {
             FlatButton(
               onPressed: () {
                 setState(() {
-                  var data = QRData(name, roomName, 0, 0);
+                  Map<String, dynamic> data = {
+                    "name": name,
+                    "roomName": roomName,
+                    "latitude": 0.0,
+                    "longitude": 0.0
+                  };
                   qrCode = QrImage(
-                    data: jsonEncode(data),
+                    data: json.encode(data),
                     size: 200.0,
                   );
                 });
@@ -61,11 +66,4 @@ class _CreateCodePageState extends State<CreateCodePage> {
           ],
         )));
   }
-}
-
-class QRData {
-  String roomName, message, owner;
-  double latitude, longitude;
-
-  QRData(this.owner, this.roomName, this.latitude, this.longitude, {this.message=""});
 }
