@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:advanced_share/advanced_share.dart';
 import 'package:flutter/material.dart';
 import 'package:qr/qr.dart';
 import 'package:image/image.dart' as Img;
@@ -77,7 +78,15 @@ class _CreateCodePageState extends State<CreateCodePage> {
             imgData == null? Container() : Image.memory(Uint8List.fromList(imgData)),
             imgData == null? Container() : FlatButton(
                 onPressed: () {
-                  print("Share Pressed");
+                  AdvancedShare.generic(msg: "Hello", url: base64Encode(imgData)).then((response) {
+                    if (response == 0) {
+                      print("failed.");
+                    } else if (response == 1) {
+                      print("success");
+                    } else if (response == 2) {
+                      print("application isn't installed");
+                    }
+                  });
                 },
                 child: Text("Share Code"))
           ],
