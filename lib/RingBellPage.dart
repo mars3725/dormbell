@@ -11,6 +11,8 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   String text = "QR Data Goes here once read";
   Map<String, dynamic> data;
+  GlobalKey<QrCameraState> cameraState = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -18,15 +20,16 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (cameraState.currentState != null) cameraState.currentState.restart();
     return Scaffold(
         appBar: AppBar(title: Text("Read Code")),
         body: Center(
         child: Stack(children: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: () => Navigator.of(context).pushNamed('/CreateCodePage')),
           SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
+            key: cameraState,
             qrCodeCallback: (code) {
               if (data == null) {
                 data = json.decode(code);
@@ -55,7 +58,11 @@ class _CameraPageState extends State<CameraPage> {
                     ));
               }
             },
-          ))]),
+          )),
+          Align(alignment: Alignment.bottomRight,
+              child: Padding(padding: EdgeInsets.all(50.0), child: IconButton(
+                  icon: Icon(Icons.add, color: Colors.white, size: 72.0),
+                  onPressed: () => Navigator.of(context).pushNamed('/CreateCodePage'))))]),
         ));
   }
 }

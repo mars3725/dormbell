@@ -3,7 +3,6 @@
 //Daniel Troutman
 //Tucker Miles....
 import 'package:dormbell/CreateCodePage.dart';
-import 'package:dormbell/HomePage.dart';
 import 'package:dormbell/RingBellPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
