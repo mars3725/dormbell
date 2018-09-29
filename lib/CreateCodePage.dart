@@ -60,17 +60,18 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   };
                   final qrCode = QrCode(4, QrErrorCorrectLevel.L);
                   qrCode.addData(json.encode(data));
+
                   qrCode.make();
-                  Img.Image img = Img.Image(qrCode.moduleCount, qrCode.moduleCount);
-                  img.fill(0);
-                  for (int x = 0; x < img.width; x++) {
-                    for (int y = 0; y < img.height; y++) {
-                      if (qrCode.isDark(x, y)) img.setPixel(x, y, 255);
-                      else img.setPixel(x, y, 0);
+                  int pixelSize = 5;
+                  Img.Image img = Img.Image(qrCode.moduleCount*pixelSize, qrCode.moduleCount*pixelSize);
+                  img = img.fill(Colors.white.value);
+                  for (int x = 0; x < qrCode.moduleCount; x++) {
+                    for (int y = 0; y < qrCode.moduleCount; y++) {
+                      if (qrCode.isDark(x, y)) img = Img.fillRect(img, x*pixelSize, y*pixelSize, x*pixelSize+pixelSize, y*pixelSize+pixelSize, Colors.black.value);
                     }
                   }
-                  var imgData = Img.encodeJpg(Img.copyResize(img, 250, 250, Img.CUBIC));
-                  QRImage = Image.memory(Uint8List.fromList(imgData));
+                  var imgData = Img.encodeJpg(img);
+                  QRImage = Image.memory(Uint8List.fromList(imgData), fit: BoxFit.fitWidth);
                 });
               },
               child:
