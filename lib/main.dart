@@ -2,8 +2,9 @@
 //Benjamin Greenberg
 //Daniel Troutman
 //Tucker Miles....
+import 'package:dormbell/CreateCode.dart';
 import 'package:dormbell/HomePage.dart';
-import 'package:dormbell/OtherPage.dart';
+import 'package:dormbell/RingBellPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc/nfc.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
           accentColorBrightness: Brightness.light,
         ),
         routes: <String, WidgetBuilder>{
-          '/OtherPage': (BuildContext context) => OtherPage(),
+          '/CreateCodePage': (BuildContext context) => CreateCodePage(),
+          '/RingBellPage': (BuildContext context) => RingBellPage(),
         });
   }
 }

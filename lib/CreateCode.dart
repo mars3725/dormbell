@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class OtherPage extends StatefulWidget {
+class CreateCodePage extends StatefulWidget {
   @override
-  _OtherPageState createState() => _OtherPageState();
+  _CreateCodePageState createState() => _CreateCodePageState();
 }
 
-class _OtherPageState extends State<OtherPage> {
+class _CreateCodePageState extends State<CreateCodePage> {
+  String title = "Title here";
   @override
   void initState() {
     super.initState();
@@ -18,7 +19,10 @@ class _OtherPageState extends State<OtherPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text("Next Page")
+            TextField(textAlign: TextAlign.center, controller: TextEditingController(text: title) ,onChanged: (value) {
+
+            },),
+            Text("Create QR Code")
           ],
         )));
   }

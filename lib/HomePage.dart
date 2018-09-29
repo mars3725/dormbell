@@ -18,9 +18,14 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed('/OtherPage'),
-              child: Text("Next Page"),)
+            Expanded(child: Padding(padding: EdgeInsets.all(25.0),
+                child: RaisedButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/CreateCodePage'),
+                  child: Text("Create Bell"),))),
+            Expanded(child: Padding(padding: EdgeInsets.all(25.0),
+                child: RaisedButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/RingBellPage'),
+                  child: Text("Ring Bell"),)))
           ],
         )));
   }
