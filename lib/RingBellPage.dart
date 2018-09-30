@@ -9,7 +9,6 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  String text = "QR Data Goes here once read";
   Map<String, dynamic> data;
   GlobalKey<QrCameraState> cameraState = GlobalKey();
 
