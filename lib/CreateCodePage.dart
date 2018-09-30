@@ -14,8 +14,8 @@ class CreateCodePage extends StatefulWidget {
 }
 
 class _CreateCodePageState extends State<CreateCodePage> {
-  String roomName = "Room Name";
-  String name = "Name";
+  String roomName = "Volhacks";
+  String name = "Matt Mohandiss";
   List<int> imgData;
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                 imgData != null? Container() : Padding(padding: EdgeInsets.all(25.0), child: Row(
                     children: <Widget>[
                       Text("Room Name: "),
-                      Flexible(child: TextField(controller: TextEditingController(text: roomName) ,onChanged: (value) {
+                      Flexible(child: TextField(onChanged: (value) {
                         roomName = value;
                       },
                       )),
@@ -43,7 +43,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                 imgData != null? Container() : Padding(padding: EdgeInsets.all(25.0), child: Row(
                     children: <Widget>[
                       Text("Name: "),
-                      Flexible(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
+                      Flexible(child: TextField(onChanged: (value) {
                         name = value;
                       },
                       )),

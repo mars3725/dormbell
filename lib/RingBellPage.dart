@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:dormbell/AuthPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
@@ -32,45 +34,89 @@ class _CameraPageState extends State<CameraPage> {
           height: MediaQuery.of(context).size.height,
           child: QrCamera(
             key: cameraState,
+            onError: (context, error) => GestureDetector(
+                child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+              Icon(Icons.notifications_off, size: 150.0),
+              Text("Error Starting Camera. Tap to retry.")
+            ]),
+            onTap: ()=> cameraState.currentState.restart()),
             qrCodeCallback: (code) {
               if (data == null) {
                 data = json.decode(code);
-                showDialog(context: context, barrierDismissible: false, builder: (context) =>
-                    AlertDialog(
-                      title: Text(data['roomName']),
-                      content: Text('Owner: ' + data['name']),
-                      actions: <Widget>[
-                        FlatButton(child: Text('Cancel'),
-                          onPressed: () {
-                          data = null;
-                          Navigator.of(context).pop();
-                          },
-                        ),
-                        FlatButton(child: Text('Ring'),
-                          onPressed: () {
-                            print("Ringing");
-                          },
-                        ),
-                        FlatButton(child: Text('Message'),
-                          onPressed: () {
-                          CloudFunctions.instance.call(
-                              functionName: "sendAdminNotification",
-                              parameters: {
-                                'ownerID': data["ownerID"],
-                                'name': data["name"],
-                              });
-                            print("Messaging");
-                          },
-                        )
-                      ],
-                    ));
+                showDialog(context: context, barrierDismissible: false,
+                    builder: (context) => mainDialog());
               }
             },
           )),
           Align(alignment: Alignment.bottomRight,
-              child: Padding(padding: EdgeInsets.all(50.0), child: IconButton(
-                  icon: Icon(Icons.add, color: Colors.white, size: 72.0),
-                  onPressed: () => Navigator.of(context).pushNamed('/CreateCodePage'))))]),
+              child: Padding(padding: EdgeInsets.all(25.0),
+                  child: GestureDetector(
+                  child: Icon(Icons.add, color: Colors.white, size: 72.0),
+                  onTap: () => Navigator.of(context).pushNamed('/CreateCodePage'))))]),
         ));
+  }
+
+  AlertDialog mainDialog() {
+    return AlertDialog(
+      title: Text(data['roomName']),
+      content: Text('Owner: ' + data['name']),
+      actions: <Widget>[
+        FlatButton(child: Text('Cancel'),
+          onPressed: () {
+            data = null;
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(child: Text('Ring'),
+          onPressed: () {
+            FirebaseAuth.instance.currentUser().then((user) {
+              CloudFunctions.instance.call(
+                  functionName: "ringUser",
+                  parameters: {
+                    'ownerID': data["ownerID"],
+                    'ringerName': user.displayName,
+                  });
+              data = null;
+              Navigator.of(context).pop();
+            });
+          },
+        ),
+        FlatButton(child: Text('Message'),
+          onPressed: () {
+            Navigator.of(context).pop();
+            showDialog(context: context, barrierDismissible: false,
+                builder: (context) => messageDialog());
+          },
+        )
+      ],
+    );
+  }
+
+  messageDialog() {
+    String message = "Default Message";
+    return AlertDialog(
+        title: Text("Message to "+data['roomName']),
+    content: TextField(onChanged: (value)=> message = value),
+    actions: <Widget>[
+      FlatButton(child: Text("Cancel"),
+          onPressed: () {
+            data = null;
+        Navigator.of(context).pop();}),
+      FlatButton(child: Text("Send"),
+          onPressed: () {
+            FirebaseAuth.instance.currentUser().then((user) {
+              CloudFunctions.instance.call(
+                  functionName: "messageUser",
+                  parameters: {
+                    'ownerID': data["ownerID"],
+                    'message': message,
+                    'ringerName': user.displayName,
+                  });
+              data = null;
+              Navigator.of(context).pop();
+            });
+            }),
+    ]);
   }
 }

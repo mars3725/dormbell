@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-
 class AuthPage extends StatefulWidget {
   final bool silentSignIn;
   AuthPage({this.silentSignIn = false}) {
@@ -27,9 +26,10 @@ class _AuthPageState extends State<AuthPage> {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
         String topic = user.uid.substring(0, 10);
-        FirebaseMessaging().configure(onMessage: (message) async => print("************onMessage: $message"));
+        FirebaseMessaging().configure(onMessage: (message) async => print(message.toString()));
         print("Subscribed to topic: "+topic);
         FirebaseMessaging().subscribeToTopic(topic);
+        loading = false;
         Navigator.of(context).pushNamed('/RingBellPage');
       }
     });
@@ -37,8 +37,8 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
-        child: Column(
+    return Scaffold(
+        body: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -51,13 +51,20 @@ class _AuthPageState extends State<AuthPage> {
               RaisedButton.icon(
                   icon: Image.asset("assets/googleLogo.png", height: 50.0),
                   label: Text("Sign In With Google",
-                      style: TextStyle(color: Colors.grey)),
+                      style  : TextStyle(color: Colors.grey)),
                   color: Colors.white,
                   onPressed: () {
                     setState(() => loading = true);
-
-                    GoogleAuth().interactiveSignIn().then((user) async {
-                      Navigator.of(context).pushNamed('/RingBellPage');
+                    FirebaseAuth.instance.currentUser().then((user) {
+                      if (user == null) {
+                        GoogleAuth().interactiveSignIn().then((user) async {
+                          loading = false;
+                          Navigator.of(context).pushNamed('/RingBellPage');
+                        });
+                      } else {
+                        loading = false;
+                        Navigator.of(context).pushNamed('/RingBellPage');
+                      }
                     });
                   }),
             ])
