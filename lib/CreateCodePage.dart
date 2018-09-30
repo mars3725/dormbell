@@ -36,7 +36,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                 Text(message['notification']['body']),
               ])));
     });
-    return Scaffold(
+    return Scaffold(key: scaffoldKey,
         appBar: AppBar(title: Center(child: Text("Create Code", style: TextStyle(fontSize: 24.0)))),
         body: Center(
             child: Column(

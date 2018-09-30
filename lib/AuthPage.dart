@@ -48,7 +48,7 @@ class _AuthPageState extends State<AuthPage> {
               ])));
     });
     return Scaffold(
-      key: scaffoldKey,
+        key: scaffoldKey,
         body: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
