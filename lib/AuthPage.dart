@@ -17,6 +17,7 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   bool loading;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   void initState() {
@@ -26,7 +27,6 @@ class _AuthPageState extends State<AuthPage> {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
         String topic = user.uid.substring(0, 10);
-        FirebaseMessaging().configure(onMessage: (message) async => print(message.toString()));
         print("Subscribed to topic: "+topic);
         FirebaseMessaging().subscribeToTopic(topic);
         loading = false;
@@ -37,7 +37,18 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging().configure(onMessage: (message) async {
+      print(message.toString());
+      scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Text(message['notification']['title']),
+                Text(message['notification']['body']),
+              ])));
+    });
     return Scaffold(
+      key: scaffoldKey,
         body: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

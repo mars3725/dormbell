@@ -16,6 +16,7 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   Map<String, dynamic> data;
   GlobalKey<QrCameraState> cameraState = GlobalKey();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   void initState() {
@@ -24,8 +25,18 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging().configure(onMessage: (message) async {
+      print(message.toString());
+      scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Text(message['notification']['title']),
+        Text(message['notification']['body']),
+      ])));
+    });
     if (cameraState.currentState != null) cameraState.currentState.restart();
-    return Scaffold(
+    return Scaffold(key: scaffoldKey,
         appBar: AppBar(title: Center(child: Text("Generate Code", style: TextStyle(fontSize: 24.0)))),
         body: Center(
         child: Stack(children: <Widget>[

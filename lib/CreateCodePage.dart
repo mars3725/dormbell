@@ -17,6 +17,8 @@ class _CreateCodePageState extends State<CreateCodePage> {
   String roomName = "Volhacks";
   String name = "Matt Mohandiss";
   List<int> imgData;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +26,16 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging().configure(onMessage: (message) async {
+      print(message.toString());
+      scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Text(message['notification']['title']),
+                Text(message['notification']['body']),
+              ])));
+    });
     return Scaffold(
         appBar: AppBar(title: Center(child: Text("Create Code", style: TextStyle(fontSize: 24.0)))),
         body: Center(
