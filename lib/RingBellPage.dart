@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
@@ -50,6 +53,12 @@ class _CameraPageState extends State<CameraPage> {
                         ),
                         FlatButton(child: Text('Message'),
                           onPressed: () {
+                          CloudFunctions.instance.call(
+                              functionName: "sendAdminNotification",
+                              parameters: {
+                                'ownerID': data["ownerID"],
+                                'name': data["name"],
+                              });
                             print("Messaging");
                           },
                         )

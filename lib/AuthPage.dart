@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -25,6 +26,10 @@ class _AuthPageState extends State<AuthPage> {
     FirebaseAuth.instance.onAuthStateChanged.listen((user) {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
+        String topic = user.uid.substring(0, 10);
+        FirebaseMessaging().configure(onMessage: (message) async => print("************onMessage: $message"));
+        print("Subscribed to topic: "+topic);
+        FirebaseMessaging().subscribeToTopic(topic);
         Navigator.of(context).pushNamed('/RingBellPage');
       }
     });
