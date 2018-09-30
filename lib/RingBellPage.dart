@@ -22,7 +22,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     if (cameraState.currentState != null) cameraState.currentState.restart();
     return Scaffold(
-        appBar: AppBar(title: Text("Read Code")),
+        appBar: AppBar(title: Center(child: Text("Generate Code", style: TextStyle(fontSize: 24.0)))),
         body: Center(
         child: Stack(children: <Widget>[
           SizedBox(

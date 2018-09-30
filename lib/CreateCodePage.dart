@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:advanced_share/advanced_share.dart';
@@ -24,13 +23,13 @@ class _CreateCodePageState extends State<CreateCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Code")),
+      appBar: AppBar(title: Center(child: Text("Create Code", style: TextStyle(fontSize: 24.0)))),
         body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Padding(padding: EdgeInsets.all(25.0), child: Row(
+            imgData != null? Container() : Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
                   Text("Room Name: "),
                   Flexible(child: TextField(controller: TextEditingController(text: roomName) ,onChanged: (value) {
@@ -39,7 +38,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   )),
                 ]
             )),
-        Padding(padding: EdgeInsets.all(25.0), child: Row(
+            imgData != null? Container() : Padding(padding: EdgeInsets.all(25.0), child: Row(
                 children: <Widget>[
                   Text("Name: "),
                   Flexible(child: TextField(controller: TextEditingController(text: name) ,onChanged: (value) {
@@ -48,9 +47,10 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   )),
                 ]
             )),
-            FlatButton(
+            imgData == null? Container() : Image.memory(Uint8List.fromList(imgData)),
+            RaisedButton(
               onPressed: () {
-                setState(() {
+                if (imgData == null) {
                   Map<String, dynamic> data = {
                     "name": name,
                     "roomName": roomName,
@@ -62,30 +62,30 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
                   qrCode.make();
                   int pixelSize = 8;
-                  Img.Image img = Img.Image(qrCode.moduleCount*pixelSize, qrCode.moduleCount*pixelSize);
+                  Img.Image img = Img.Image(qrCode.moduleCount * pixelSize,
+                      qrCode.moduleCount * pixelSize);
                   img = img.fill(Colors.white.value);
                   for (int x = 0; x < qrCode.moduleCount; x++) {
                     for (int y = 0; y < qrCode.moduleCount; y++) {
-                      if (qrCode.isDark(x, y)) img = Img.fillRect(img, x*pixelSize, y*pixelSize, x*pixelSize+pixelSize, y*pixelSize+pixelSize, Colors.black.value);
+                      if (qrCode.isDark(x, y)) img = Img.fillRect(
+                          img, x * pixelSize, y * pixelSize,
+                          x * pixelSize + pixelSize, y * pixelSize + pixelSize,
+                          Colors.black.value);
                     }
                   }
-                  imgData = Img.encodePng(img);
-                });
-              },
-              child:
-                Text("Create QR Code"),
-            ),
-            imgData == null? Container() : Image.memory(Uint8List.fromList(imgData)),
-            imgData == null? Container() : FlatButton(
-                onPressed: () {
+                  setState(() => imgData = Img.encodePng(img));
+                } else {
                   var str = base64Encode(imgData);
                   AdvancedShare.generic(msg: roomName, url: "data:image/png;base64, "+str).then((response) {
                     if (response == 0) print("failed to share code");
                     else if (response == 1) print("success sharing code");
                     else if (response == 2) print("application isn't installed");
                   });
-                },
-                child: Text("Share Code"))
+                }
+              },
+              child:
+              imgData == null? Text("Create QR Code") : Text("Share Code"),
+            )
           ],
         )));
   }

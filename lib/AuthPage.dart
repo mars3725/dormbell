@@ -22,7 +22,6 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
     loading = false;
-
     FirebaseAuth.instance.onAuthStateChanged.listen((user) {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
@@ -68,10 +67,8 @@ class GoogleAuth {
   Future<FirebaseUser> interactiveSignIn() async {
     FirebaseUser user;
     try {
-      GoogleSignInAccount googleUser =
-      await googleSignIn.signIn();
-      GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+      GoogleSignInAccount googleUser = await googleSignIn.signIn();
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       user = await FirebaseAuth.instance.signInWithGoogle(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
       print("User ${user.displayName} signed in with interface");
