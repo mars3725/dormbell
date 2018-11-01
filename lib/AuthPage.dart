@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthPage extends StatefulWidget {
   final bool silentSignIn;
+
   AuthPage({this.silentSignIn = false}) {
     if (silentSignIn) GoogleAuth().silentSignIn();
   }
@@ -27,8 +28,23 @@ class _AuthPageState extends State<AuthPage> {
       print("Auth State Changed For User: ${user.toString()}");
       if (user != null) {
         String topic = user.uid.substring(0, 10);
-        print("Subscribed to topic: "+topic);
+        print("Subscribed to topic: " + topic);
         FirebaseMessaging().subscribeToTopic(topic);
+        FirebaseMessaging().configure(onMessage: (message) async {
+          print(message.toString());
+          ScaffoldState scaffoldState =
+              Scaffold.of(context);
+          if (scaffoldState != null) {
+            scaffoldState.showSnackBar(SnackBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                content:
+                    Column(children: <Widget>[
+                  Text(message['notification']['title']),
+                  Text(message['notification']['body']),
+                ])));
+          } else
+            print("Could not find scaffold to show message");
+        });
         loading = false;
         Navigator.of(context).pushNamed('/RingBellPage');
       }
@@ -37,19 +53,10 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging().configure(onMessage: (message) async {
-      print(message.toString());
-      scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Text(message['notification']['title']),
-                Text(message['notification']['body']),
-              ])));
-    });
     return Scaffold(
         key: scaffoldKey,
-        body: Center(child: Column(
+        body: Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -57,28 +64,33 @@ class _AuthPageState extends State<AuthPage> {
                 padding: EdgeInsets.all(50.0),
                 child: Image.asset("assets/logo.png",
                     width: 200.0, color: Theme.of(context).primaryColor)),
-            loading? CircularProgressIndicator() :
-            Column(children: <Widget>[
-              RaisedButton.icon(
-                  icon: Image.asset("assets/googleLogo.png", height: 50.0),
-                  label: Text("Sign In With Google",
-                      style  : TextStyle(color: Colors.grey)),
-                  color: Colors.white,
-                  onPressed: () {
-                    setState(() => loading = true);
-                    FirebaseAuth.instance.currentUser().then((user) {
-                      if (user == null) {
-                        GoogleAuth().interactiveSignIn().then((user) async {
-                          loading = false;
-                          Navigator.of(context).pushNamed('/RingBellPage');
-                        });
-                      } else {
-                        loading = false;
-                        Navigator.of(context).pushNamed('/RingBellPage');
-                      }
-                    });
-                  }),
-            ])
+            loading
+                ? CircularProgressIndicator()
+                : Column(children: <Widget>[
+                    RaisedButton.icon(
+                        icon:
+                            Image.asset("assets/googleLogo.png", height: 50.0),
+                        label: Text("Sign In With Google",
+                            style: TextStyle(color: Colors.grey)),
+                        color: Colors.white,
+                        onPressed: () {
+                          setState(() => loading = true);
+                          FirebaseAuth.instance.currentUser().then((user) {
+                            if (user == null) {
+                              GoogleAuth()
+                                  .interactiveSignIn()
+                                  .then((user) async {
+                                loading = false;
+                                Navigator.of(context)
+                                    .pushNamed('/RingBellPage');
+                              });
+                            } else {
+                              loading = false;
+                              Navigator.of(context).pushNamed('/RingBellPage');
+                            }
+                          });
+                        }),
+                  ])
           ],
         )));
   }
@@ -112,4 +124,3 @@ class GoogleAuth {
     }
   }
 }
-

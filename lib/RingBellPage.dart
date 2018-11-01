@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:dormbell/AuthPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
@@ -25,16 +22,6 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging().configure(onMessage: (message) async {
-      print(message.toString());
-      scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Text(message['notification']['title']),
-                Text(message['notification']['body']),
-              ])));
-    });
     if (cameraState.currentState != null) cameraState.currentState.restart();
     return Scaffold(key: scaffoldKey,
         backgroundColor: Colors.black,

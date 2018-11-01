@@ -2,9 +2,9 @@
 //Benjamin Greenberg
 //Daniel Troutman
 //Tucker Miles....
+import 'package:dormbell/AuthPage.dart';
 import 'package:dormbell/CreateCodePage.dart';
 import 'package:dormbell/RingBellPage.dart';
-import 'package:dormbell/AuthPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,4 +32,3 @@ class MyApp extends StatelessWidget {
         });
   }
 }
-
