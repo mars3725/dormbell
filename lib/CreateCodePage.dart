@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:advanced_share/advanced_share.dart';
+//import 'package:advanced_share/advanced_share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as Img;
@@ -94,7 +94,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
                   });
                 } else {
                   var data = Uri.dataFromBytes(imgData, mimeType: "image/png");
-                  AdvancedShare.generic(msg: roomName, url: data.toString());
+                  //AdvancedShare.generic(msg: roomName, url: data.toString());
                   //Share.share(data.toString());
                 }
               },
