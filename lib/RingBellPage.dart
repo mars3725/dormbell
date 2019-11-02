@@ -71,12 +71,11 @@ class _CameraPageState extends State<CameraPage> {
         FlatButton(child: Text('Ring'),
           onPressed: () {
             FirebaseAuth.instance.currentUser().then((user) {
-              CloudFunctions.instance.call(
-                  functionName: "ringUser",
-                  parameters: {
-                    'ownerID': data["ownerID"],
-                    'ringerName': user.displayName,
-                  });
+              HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(functionName: "ringUser");
+              callable.call({
+                'ownerID': data["ownerID"],
+                'ringerName': user.displayName,
+              });
               data = null;
               Navigator.of(context).pop();
             });
@@ -106,13 +105,12 @@ class _CameraPageState extends State<CameraPage> {
           FlatButton(child: Text("Send"),
               onPressed: () {
                 FirebaseAuth.instance.currentUser().then((user) {
-                  CloudFunctions.instance.call(
-                      functionName: "messageUser",
-                      parameters: {
-                        'ownerID': data["ownerID"],
-                        'message': message,
-                        'ringerName': user.displayName,
-                      });
+                  HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(functionName: "messageUser");
+                  callable.call({
+                    'ownerID': data["ownerID"],
+                    'message': message,
+                    'ringerName': user.displayName,
+                  });
                   data = null;
                   Navigator.of(context).pop();
                 });

@@ -104,8 +104,9 @@ class GoogleAuth {
     try {
       GoogleSignInAccount googleUser = await googleSignIn.signIn();
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      user = await FirebaseAuth.instance.signInWithGoogle(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      AuthResult result = await FirebaseAuth.instance.signInWithCredential(GoogleAuthProvider.getCredential(
+          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken));
+      user = result.user;
       print("User ${user.displayName} signed in with interface");
     } catch (error) {
       print("Silent sign in error: $error");
@@ -118,8 +119,9 @@ class GoogleAuth {
     if (googleUser != null) {
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      FirebaseUser user = await FirebaseAuth.instance.signInWithGoogle(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      AuthResult result = await FirebaseAuth.instance.signInWithCredential(GoogleAuthProvider.getCredential(
+          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken));
+      FirebaseUser user = result.user;
       print("User ${user.displayName} signed in silently");
     }
   }
