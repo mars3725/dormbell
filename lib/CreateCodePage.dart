@@ -102,8 +102,12 @@ class _CreateCodePageState extends State<CreateCodePage> {
 
                     final DocumentReference docRef = Firestore.instance.collection(user.uid).document(name);
                     docRef.get().then((snapshot) {
+
+                      List<String> urls = List();
+                      //if (snapshot != null) urls = snapshot.data['urls'];
                       storageRef.getDownloadURL().then((url) => urls.add(url));
-                      docRef.setData({'url': url}, merge: true);
+                      //docRef.updateData({'urls': urls});
+                      docRef.setData({'url': urls}, merge: true);
                     });
                   });
                 } else {
