@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share/share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
   String name = "Matt Mohandiss";
   List<int> imgData;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  StorageReference ref;
+  StorageReference storageRef;
 
   @override
   void initState() {
@@ -95,11 +96,18 @@ class _CreateCodePageState extends State<CreateCodePage> {
                     }
                     setState(() => imgData = Img.encodePng(img));
                     FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://dormbell-ce20b.appspot.com');
-                    ref = storage.ref().child(user.uid).child(Random().nextDouble().toString()+'.jpg');
-                    ref.putData(imgData);
+                    String id = Random().nextDouble().toString();
+                    storageRef = storage.ref().child(id+'.jpg');
+                    storageRef.putData(imgData);
+
+                    final DocumentReference docRef = Firestore.instance.collection(user.uid).document(name);
+                    docRef.get().then((snapshot) {
+                      storageRef.getDownloadURL().then((url) => urls.add(url));
+                      docRef.setData({'url': url}, merge: true);
+                    });
                   });
                 } else {
-                  if (ref != null) ref.getDownloadURL().then(
+                  if (storageRef != null) storageRef.getDownloadURL().then(
                           (url) => Share.share(url, subject: roomName));
                 }
               },
