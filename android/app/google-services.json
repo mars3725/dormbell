@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:68133826293:android:21583e597e9542c0",
+        "mobilesdk_app_id": "1:68133826293:android:736de0d560979941509fbc",
         "android_client_info": {
           "package_name": "com.mattmohandiss.dormbell.dormbell"
         }
       },
       "oauth_client": [
         {
-          "client_id": "68133826293-p281nl7cc4c17ua049lahbh84hp6bolt.apps.googleusercontent.com",
+          "client_id": "68133826293-614qlq9d93g6rnk3n0snhuthbglg61p2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mattmohandiss.dormbell.dormbell",

@@ -49,10 +49,10 @@ class _CameraPageState extends State<CameraPage> {
                     }
                   },
                 )),
-            Align(alignment: Alignment.bottomRight,
+            Align(alignment: Alignment.bottomCenter,
                 child: Padding(padding: EdgeInsets.all(25.0),
                     child: GestureDetector(
-                        child: Icon(Icons.add, color: Colors.white, size: 72.0),
+                        child: Icon(Icons.add, color: Colors.white, size: 100.0),
                         onTap: () => Navigator.of(context).pushNamed('/CreateCodePage'))))]),
         ));
   }

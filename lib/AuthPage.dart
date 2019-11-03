@@ -45,8 +45,9 @@ class _AuthPageState extends State<AuthPage> {
           } else
             print("Could not find scaffold to show message");
         });
-        loading = false;
-        Navigator.of(context).pushNamed('/RingBellPage');
+        setState(() => loading = false);
+        if (user != null) Navigator.of(context).pushNamed('/RingBellPage');
+        else print("NULL USER");
       }
     });
   }
@@ -80,13 +81,14 @@ class _AuthPageState extends State<AuthPage> {
                               GoogleAuth()
                                   .interactiveSignIn()
                                   .then((user) async {
-                                loading = false;
-                                Navigator.of(context)
-                                    .pushNamed('/RingBellPage');
+                                setState(() => loading = false);
+                                if (user != null) Navigator.of(context).pushNamed('/RingBellPage');
+                                else print("NULL USER");
                               });
                             } else {
-                              loading = false;
-                              Navigator.of(context).pushNamed('/RingBellPage');
+                              setState(() => loading = false);
+                              if (user != null) Navigator.of(context).pushNamed('/RingBellPage');
+                              else print("NULL USER");
                             }
                           });
                         }),
