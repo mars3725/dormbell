@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:share/share.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as Img;
 import 'package:qr/qr.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CreateCodePage extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class _CreateCodePageState extends State<CreateCodePage> {
   String name = "Matt Mohandiss";
   List<int> imgData;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  StorageReference ref;
 
   @override
   void initState() {
@@ -91,11 +94,13 @@ class _CreateCodePageState extends State<CreateCodePage> {
                       }
                     }
                     setState(() => imgData = Img.encodePng(img));
+                    FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://dormbell-ce20b.appspot.com');
+                    ref = storage.ref().child(user.uid).child(Random().nextDouble().toString()+'.jpg');
+                    ref.putData(imgData);
                   });
                 } else {
-                  var data = Uri.dataFromBytes(imgData, mimeType: "image/png");
-                  //AdvancedShare.generic(msg: roomName, url: data.toString());
-                  Share.share(data.toString(), subject: roomName);
+                  if (ref != null) ref.getDownloadURL().then(
+                          (url) => Share.share(url, subject: roomName));
                 }
               },
               child:

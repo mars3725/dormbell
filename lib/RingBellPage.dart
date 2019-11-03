@@ -34,13 +34,16 @@ class _CameraPageState extends State<CameraPage> {
                 child: QrCamera(
                   key: cameraState,
                   notStartedBuilder: (context) => Container(),
-                  onError: (context, error) => GestureDetector(
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.notifications_off, size: 150.0, color: Colors.white),
-                            Text("Error Starting Camera. Tap to retry.", style: TextStyle(color: Colors.white))
-                          ]),
-                      onTap: ()=> cameraState.currentState.restart()),
+                  onError: (context, error) {
+                    setState(() {});
+                    return GestureDetector(
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.notifications_off, size: 150.0, color: Colors.white),
+                              Text("Error Starting Camera. Tap to retry.", style: TextStyle(color: Colors.white))
+                            ]),
+                        onTap: ()=> cameraState.currentState.restart());
+                  },
                   qrCodeCallback: (code) {
                     if (data == null) {
                       data = json.decode(code);
